@@ -110,6 +110,16 @@ export default class DayPicker extends Component {
       PropTypes.instanceOf(Component),
     ]),
 
+    // Roles
+    roles: PropTypes.shape({
+      caption: PropTypes.string,
+      weekdays: PropTypes.string,
+      body: PropTypes.string,
+      week: PropTypes.string,
+      day: PropTypes.string,
+    }),
+    weekdaysHidden: PropTypes.boolean,
+
     // Events
     onBlur: PropTypes.func,
     onFocus: PropTypes.func,
@@ -153,6 +163,14 @@ export default class DayPicker extends Component {
     weekdayElement: <Weekday />,
     navbarElement: <Navbar classNames={classNames} />,
     captionElement: <Caption classNames={classNames} />,
+    roles: {
+      caption: 'heading',
+      weekdays: 'rowgroup',
+      month: 'grid',
+      body: 'rowgroup',
+      week: 'row',
+      day: 'gridcell',
+    },
   };
 
   constructor(props) {

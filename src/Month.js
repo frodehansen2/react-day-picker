@@ -62,6 +62,16 @@ export default class Month extends Component {
     onDayTouchEnd: PropTypes.func,
     onDayTouchStart: PropTypes.func,
     onWeekClick: PropTypes.func,
+
+    roles: PropTypes.shape({
+      caption: PropTypes.oneOf('gridrow', 'presentation'),
+      weekdays: PropTypes.oneOf('gridcell', 'link'),
+      month: PropTypes.oneOf('grid', 'presentation'),
+      body: PropTypes.oneOf('rowgroup', 'presentation'),
+      week: PropTypes.oneOf('row', 'presentation'),
+      weekday: PropTypes.oneOf('columnheader', 'presentation'),
+      day: PropTypes.oneOf('gridcell', 'link'),
+    }),
   };
 
   renderDay = day => {
@@ -144,6 +154,7 @@ export default class Month extends Component {
       showWeekNumbers,
       showWeekDays,
       onWeekClick,
+      roles,
     } = this.props;
 
     const captionProps = {
@@ -160,7 +171,7 @@ export default class Month extends Component {
 
     const weeks = Helpers.getWeekArray(month, firstDayOfWeek, fixedWeeks);
     return (
-      <div className={classNames.month} role="grid">
+      <div className={classNames.month} role={roles.month}>
         {caption}
         {showWeekDays && (
           <Weekdays
@@ -174,7 +185,7 @@ export default class Month extends Component {
             weekdayElement={weekdayElement}
           />
         )}
-        <div className={classNames.body} role="rowgroup">
+        <div className={classNames.body} role={roles.body}>
           {weeks.map(week => {
             let weekNumber;
             if (showWeekNumbers) {
@@ -184,13 +195,13 @@ export default class Month extends Component {
               <div
                 key={week[0].getTime()}
                 className={classNames.week}
-                role="row"
+                role={roles.week}
               >
                 {showWeekNumbers && (
                   <div
                     className={classNames.weekNumber}
                     tabIndex={0}
-                    role="gridcell"
+                    role={roles.weekdays}
                     onClick={
                       onWeekClick
                         ? e => onWeekClick(weekNumber, week, e)
