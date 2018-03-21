@@ -14,6 +14,19 @@ import classNames from './classNames';
 
 import { ENTER, SPACE, LEFT, UP, DOWN, RIGHT } from './keys';
 
+export const RoleTypesShape = {
+  caption: PropTypes.string,
+  month: PropTypes.string,
+  body: PropTypes.string,
+  weeknumber: PropTypes.string,
+  week: PropTypes.string,
+  weekday: PropTypes.string,
+  weekdays: PropTypes.string,
+  weekdaysRow: PropTypes.string,
+  day: PropTypes.string,
+  disabledDay: PropTypes.string,
+};
+
 export default class DayPicker extends Component {
   static VERSION = '7.1.4';
 
@@ -111,14 +124,7 @@ export default class DayPicker extends Component {
     ]),
 
     // Roles
-    roles: PropTypes.shape({
-      caption: PropTypes.string,
-      weekdays: PropTypes.string,
-      body: PropTypes.string,
-      week: PropTypes.string,
-      day: PropTypes.string,
-    }),
-    weekdaysHidden: PropTypes.boolean,
+    roles: PropTypes.shape(RoleTypesShape),
 
     // Events
     onBlur: PropTypes.func,
@@ -165,11 +171,13 @@ export default class DayPicker extends Component {
     captionElement: <Caption classNames={classNames} />,
     roles: {
       caption: 'heading',
+      weeknumber: 'gridrow',
       weekdays: 'rowgroup',
       month: 'grid',
       body: 'rowgroup',
       week: 'row',
       day: 'gridcell',
+      disabledDay: 'gridcell',
     },
   };
 

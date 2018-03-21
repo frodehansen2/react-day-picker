@@ -8,6 +8,7 @@ import { ENTER } from './keys';
 import * as ModifiersUtils from './ModifiersUtils';
 import * as Helpers from './Helpers';
 import * as DateUtils from './DateUtils';
+import { RoleTypesShape } from './DayPicker';
 
 export default class Month extends Component {
   static propTypes = {
@@ -63,15 +64,7 @@ export default class Month extends Component {
     onDayTouchStart: PropTypes.func,
     onWeekClick: PropTypes.func,
 
-    roles: PropTypes.shape({
-      caption: PropTypes.oneOf('gridrow', 'presentation'),
-      weekdays: PropTypes.oneOf('gridcell', 'link'),
-      month: PropTypes.oneOf('grid', 'presentation'),
-      body: PropTypes.oneOf('rowgroup', 'presentation'),
-      week: PropTypes.oneOf('row', 'presentation'),
-      weekday: PropTypes.oneOf('columnheader', 'presentation'),
-      day: PropTypes.oneOf('gridcell', 'link'),
-    }),
+    roles: PropTypes.shape(RoleTypesShape),
   };
 
   renderDay = day => {
@@ -126,6 +119,7 @@ export default class Month extends Component {
         onMouseUp={this.props.onDayMouseUp}
         onTouchEnd={this.props.onDayTouchEnd}
         onTouchStart={this.props.onDayTouchStart}
+        roles={this.props.roles}
       >
         {this.props.renderDay(day, modifiers)}
       </Day>
@@ -163,6 +157,7 @@ export default class Month extends Component {
       months,
       localeUtils,
       locale,
+      roles,
       onClick: onCaptionClick ? e => onCaptionClick(month, e) : undefined,
     };
     const caption = React.isValidElement(captionElement)
@@ -183,6 +178,7 @@ export default class Month extends Component {
             locale={locale}
             localeUtils={localeUtils}
             weekdayElement={weekdayElement}
+            roles={roles}
           />
         )}
         <div className={classNames.body} role={roles.body}>
@@ -200,8 +196,9 @@ export default class Month extends Component {
                 {showWeekNumbers && (
                   <div
                     className={classNames.weekNumber}
-                    tabIndex={0}
-                    role={roles.weekdays}
+                    /* eslint-disable jsx-a11y/no-noninteractive-tabindex */
+                    tabIndex={onWeekClick ? 0 : undefined}
+                    role={roles.weeknumber}
                     onClick={
                       onWeekClick
                         ? e => onWeekClick(weekNumber, week, e)
